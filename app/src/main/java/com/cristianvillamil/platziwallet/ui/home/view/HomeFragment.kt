@@ -18,7 +18,11 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment(), HomeContract.View {
 
     private val favoriteTransferAdapter = FavoriteTransferAdapter()
-    private var homePresenter:HomeContract.Presenter? = null
+
+
+    //    private var homePresenter:HomeContract.Presenter? = null
+    //En kotlin podemos usar el lateinit para instanciar la variable despues y no inicializarla nula
+    private lateinit var homePresenter: HomeContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,11 +62,11 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showLoader() {
-        TODO("Not yet implemented")
+        homeLoader.visibility = View.VISIBLE
     }
 
     override fun hideLoader() {
-        TODO("Not yet implemented")
+        homeLoader.visibility = View.GONE
     }
 
     override fun showFavoriteTransfers(favoriteTransfer: List<FavoriteTransfer>) {
