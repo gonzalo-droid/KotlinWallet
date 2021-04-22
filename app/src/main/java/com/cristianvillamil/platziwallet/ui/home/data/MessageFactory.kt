@@ -12,11 +12,10 @@ class MessageFactory {
     }
 
     fun getDialog(context:Context ,type: String):AlertDialog.Builder{
-        when(type){
+        when(type){ //switch
             TYPE_ERROR -> {
                 return AlertDialog.Builder(context)
                     .setMessage("Error de contenino")
-
             }
 
             TYPE_SUCCESS -> {

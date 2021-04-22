@@ -27,7 +27,8 @@ package com.cristianvillamil.platziwallet.ui.transfer
         init {
             this.accountId = accountId
         }
-
+        //scope => let, run, with, apply, y also.
+        //Apply aplica nuevos valores a las instancias
         fun setUserName(newUserName: String): Builder = apply {
             this.userName = newUserName
         }
