@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cristianvillamil.platziwallet.R
@@ -16,7 +17,6 @@ import com.cristianvillamil.platziwallet.ui.home.data.MessageFactory.Companion.T
 import com.cristianvillamil.platziwallet.ui.home.data.MessageFactory.Companion.TYPE_SUCCESS
 import com.cristianvillamil.platziwallet.ui.home.presenter.HomePresenter
 import com.cristianvillamil.platziwallet.ui.observable.AvailableBalanceObservable
-import com.cristianvillamil.platziwallet.ui.observable.Observer
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -60,17 +60,23 @@ class HomeFragment : Fragment(), HomeContract.View {
 
 
         //patron observer
+//        availableBalanceObservable.addObserver(
+//            object: Observer{
+//                override fun notifyChange(newValue: Double) {
+//                    //update value in view
+//                    amountValueTextView.setText("$ $newValue")
+////                    amountValueTextView.text = "$ $newValue"
+//                }
+//
+//            }
+//        )
 
-        availableBalanceObservable.addObserver(
-            object: Observer{
-                override fun notifyChange(newValue: Double) {
-                    //update value in view
-                    amountValueTextView.setText("$ $newValue")
-//                    amountValueTextView.text = "$ $newValue"
-                }
 
-            }
-        )
+        //arquitecture component
+        homePresenter!!.getPercentageLiveData().observe(this, Observer<String>{
+            value -> percentageText.text = value
+        })
+
     }
 
     private fun initRecyclerView() {
@@ -92,13 +98,13 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun showFavoriteTransfers(favoriteTransfer: List<FavoriteTransfer>) {
         favoriteTransferAdapter.setData(favoriteTransfer)
-        var dialogFactory: MessageFactory = MessageFactory()
-
-        //mitigar CONTEXT null
-        context?.let{//si el contexto no es null
-            val errorDialog = dialogFactory.getDialog(it, TYPE_SUCCESS)
-            errorDialog.show()
-        }
+//        var dialogFactory: MessageFactory = MessageFactory()
+//
+//        //mitigar CONTEXT null
+//        context?.let{//si el contexto no es null
+//            val errorDialog = dialogFactory.getDialog(it, TYPE_SUCCESS)
+//            errorDialog.show()
+//        }
 
     }
 
